@@ -73,12 +73,12 @@ namespace Api.Controllers.v1
             if (id != customerToUpdate.Id)
             {
                 _logger.LogError("The PUT call to api/v1/Customer/{Id} failed. Ids didn't match (Customer instance had Id {CustomerId})", id, customerToUpdate.Id);
-                return BadRequest();
+                return BadRequest("Ids didn't match.");
             }
             try
             {
                 await _customerDataService.UpdateCustomer(customerToUpdate);
-                return Ok();
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -94,7 +94,7 @@ namespace Api.Controllers.v1
             try
             {
                 await _customerDataService.DeleteCustomerById(id);
-                return Ok();
+                return NoContent();
             }
             catch (Exception ex)
             {
