@@ -55,4 +55,4 @@ Managers using WPF apps can search, view, and update customer and vehicle detail
 
 ### Delete A Customer
 
-![](https://photos.google.com/share/AF1QipNfle-R1tIKxxmfUJPtVWVtetwDLZLxFYxeq-udFAo1CiNIbB_PfAa0KbSQvLgGbA?key=d0VkeHFiWjQxV1hHVUNtbmM5MnNrb1JlckQ0UHZ3)
+![](https://lh3.googleusercontent.com/pw/AIL4fc_mtXS9guY91BdodT192KulpkgYxQXw2biQMIQ99vlE7IZzG5oCsQDcP0eiReTpu39AxCX9WXSLgCYe3VsGK-qI3hdqLQvnZhYW00-TYehSEWFrnYOF7Sy6dTJeTmukI8KAl51cUXi_b9SWCPSjh-V0=w546-h414-s-no)
