@@ -25,7 +25,7 @@ Managers using WPF apps can search, view, and update customer and vehicle detail
 
 ### Swagger UI Showing Some Endpoints
 
-![](https://lh3.googleusercontent.com/pw/AIL4fc8-ITOnXjt1LIcr-eCex3mTOQiMa75jVLWtdemuZgLmSBkakvweaS2M-Nspp4pCdyLRxPezd0u8NklOgAol2n3bTzWjaU40ZDP0WHQ0rNV-KOQghNk8HXz_lsgSSHlWiMpPpGadA2PB3pDOGtdx-80V=w500-h255-s-no)
+![](https://lh3.googleusercontent.com/pw/AIL4fc_CDUE4PmCWQpFwwGNK6zslr892LNteGTfm3mtGfdxBhKZxhOP1ZZANp3Jp0ImLRl_tXueWQdU_mNsEQ0w5wMmQwh69HX27tdJ7AMg28YZZP9zZxCqMacTOqTgL_3CPG6EdAsdWPsM1qP0SdyjRc8BS=w1866-h952-s-no)
 
 ### Now Testing From Postman
 
