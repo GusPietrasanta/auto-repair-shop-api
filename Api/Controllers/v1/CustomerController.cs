@@ -2,10 +2,11 @@ using DataAccessLibrary.Data.Interfaces;
 using DataAccessLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers
+namespace Api.Controllers.v1
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerDataService _customerDataService;
@@ -17,7 +18,7 @@ namespace Api.Controllers
             _logger = logger;
         }
 
-        // GET: api/Customer
+        // GET: api/v1/Customer
         [HttpGet]
         public async Task<ActionResult<List<ICustomerModel>>> Get()
         {
@@ -27,9 +28,10 @@ namespace Api.Controllers
 
         // GET: api/Customer/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<ActionResult<ICustomerModel>> Get(int id)
         {
-            return "value";
+            var output = await _customerDataService.ReadCustomerById(id);
+            return Ok(output);
         }
 
         // POST: api/Customer
