@@ -1,6 +1,9 @@
+using Api.Entities;
 using DataAccessLibrary.Data.DataServices;
 using DataAccessLibrary.Data.Interfaces;
 using DataAccessLibrary.DataAccess;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Build.Framework;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+// Healthcheck
+builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("SQLDB")!);
+
+// Identity
+builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.AddMvc();
 
 // Swagger Config / Api Versioning
 builder.Services.AddSwaggerGen(opts =>
@@ -72,8 +82,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Add this for Health Checks
+app.MapHealthChecks("/health").AllowAnonymous();
+
 
 app.Run();
