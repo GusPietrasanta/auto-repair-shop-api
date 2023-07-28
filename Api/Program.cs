@@ -1,9 +1,11 @@
+using System.Text;
 using Api.Entities;
 using DataAccessLibrary.Data.DataServices;
 using DataAccessLibrary.Data.Interfaces;
 using DataAccessLibrary.DataAccess;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Build.Framework;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,13 +15,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Default Services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
-// Healthcheck
-builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("SQLDB")!);
-
-// Identity
-builder.Services.AddDbContext<ApplicationDbContext>();
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 builder.Services.AddMvc();
 
 // Swagger Config / Api Versioning
@@ -66,6 +61,42 @@ builder.Services.AddVersionedApiExplorer(opts =>
 // Data access services
 builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton<ICustomerDataService, CustomerDataService>();
+
+
+// Healthcheck
+builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("SQLDB")!);
+
+// Identity
+builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+builder.Services.AddAuthorization(opts =>
+{
+	opts.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+});
+
+builder.Services.AddAuthentication(opts =>
+	{
+		opts.DefaultChallengeScheme = "Bearer";
+		opts.DefaultAuthenticateScheme = "Bearer";
+		opts.DefaultScheme = "Bearer";
+	})
+	.AddJwtBearer(opts =>
+{
+	opts.IncludeErrorDetails = true;
+	opts.TokenValidationParameters = new()
+	{
+		ValidateIssuer = true,
+		ValidateAudience = true,
+		ValidateIssuerSigningKey = true,
+		ValidIssuer = Environment.GetEnvironmentVariable("Authentication:Issuer"),
+		ValidAudience = Environment.GetEnvironmentVariable("Authentication:Audience"),
+		IssuerSigningKey =
+			new SymmetricSecurityKey(
+				Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("Authentication:SecretKey")!))
+	};
+});
+
 
 
 var app = builder.Build();

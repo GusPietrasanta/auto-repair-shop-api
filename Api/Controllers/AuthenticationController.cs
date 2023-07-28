@@ -58,7 +58,7 @@ namespace Api.Controllers
             {
                 new(JwtRegisteredClaimNames.Sub, user.Id),
                 new(JwtRegisteredClaimNames.UniqueName, user.UserName!),
-                new("role", role)
+                new(ClaimTypes.Role, role)
             };
 
             var token = new JwtSecurityToken(
