@@ -17,11 +17,12 @@ Managers using WPF apps can search, view, and update customer and vehicle detail
 ## Technology Stack
 - C#
 - ASP.NET Web API
+- JWT Authentication and Authorisation
 - SQL Server
 - Dapper
 - Postman
 
-## First Screenshots
+## Screenshots
 
 ### Swagger UI Showing Some Endpoints
 
@@ -56,3 +57,19 @@ Managers using WPF apps can search, view, and update customer and vehicle detail
 ### Delete A Customer
 
 ![](https://lh3.googleusercontent.com/pw/AIL4fc_mtXS9guY91BdodT192KulpkgYxQXw2biQMIQ99vlE7IZzG5oCsQDcP0eiReTpu39AxCX9WXSLgCYe3VsGK-qI3hdqLQvnZhYW00-TYehSEWFrnYOF7Sy6dTJeTmukI8KAl51cUXi_b9SWCPSjh-V0=w546-h414-s-no)
+
+## Authentication and Authorisation
+
+The API uses the Log In information from the Web App to verify users (checking email and password), creates a token with their roles and sends it back to the user to access the allowed endpoints.
+
+Trying to access and endpoint (other than the token generator) without a valid token will return 401 Unauthorized.
+![](https://lh3.googleusercontent.com/pw/AIL4fc9tXA0r0t6ozyAIgydI-KdXNpP5WX3eo69CW3v7ZljhCTucvm8bA4WmX58CXNm5noXU__avkVWz_76OiQi7XUKbbtKkzldtaWGW8fekGK-B4mH2MmC9G5iAJfjvakwnd_yLnGltLtnSEdddoDonoVCx=w1018-h421-s-no)
+
+Trying to access and endpoint without a valid token generated for a Mechanic to a Manager-Only endpoint will return 403 Forbidden.
+![](https://lh3.googleusercontent.com/pw/AIL4fc-P2ZVO9NjTdDJfSKeTK8eGNetoWKRKqzcRfE4nnlPP-9e4vBeNhhVnS8IeULjTN2Oq51cTmjcanSJWcLiaMBIqfI7KxI6xOM9uXHlhFnnM0h-on4r4ioQa6_NW6aNmq77xt4zuLiVX3K3PSy3iT1Of=w1062-h600-s-no)
+
+Creating a token using the login details through Asp.Net Identity User Manager will automatically retrieve the user role from the database to add this information to the token
+![](https://lh3.googleusercontent.com/pw/AIL4fc9TBIb23GFJCkjQpVxyBI52fldHTLKFb3PQkjAgiohsPdXvgIOoh1y8ZTFJQHy1hFyGmYRsOJJkMaqAWVY3j1UAGjaWUtsFZ102syF1Hfl-I0Q4ETgtrhBy39HE_SoQddq_Dc_PBJYf_LQuBfO7sOTS=w772-h753-s-no)
+
+That generated token will now give the user access to the allowed endpoints considering their role
+![](https://lh3.googleusercontent.com/pw/AIL4fc9lvhYm9t-8KekMwlzvjRruVxnbm5RJLz_rE40snrne_h6fBU0J1OKdj1BLzbflkyDO5-S8fXQNdj7cZ88TT6dT4NjtqHfpgwmrA5bxCYGLQ_ZvGZQRUs6eSiIZC5x7TOznsstdpwNevhRcnO13Nf0l=w1165-h882-s-no)
