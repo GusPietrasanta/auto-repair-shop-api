@@ -21,7 +21,7 @@ namespace Api.Controllers.v1
         }
         
         // GET: api/v1/Message
-        [HttpGet]
+        [HttpGet(Name = "Get All Messages")]
         [Authorize(Roles = "Manager")]
         public async Task<ActionResult<List<IMessageModel>>> Get()
         {        
@@ -39,7 +39,7 @@ namespace Api.Controllers.v1
         
 
         // POST: api/v1/Message
-        [HttpPost]
+        [HttpPost(Name = "Create a New Message")]
         [Authorize(Roles = "Mechanic")]
         public async Task<ActionResult> Post([FromBody] MessageModel newMessage)
         {
@@ -61,7 +61,7 @@ namespace Api.Controllers.v1
         }
 
         // PUT: api/v1/Message/5/MarkAsRead
-        [HttpPut("{id}/MarkAsRead")]
+        [HttpPut("{id}/MarkAsRead", Name = "Mark Message As Read")]
         [Authorize(Roles = "Manager")]
         public async Task<ActionResult> Put(int id)
         {            
