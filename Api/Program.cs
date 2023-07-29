@@ -61,6 +61,7 @@ builder.Services.AddVersionedApiExplorer(opts =>
 // Data access services
 builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton<ICustomerDataService, CustomerDataService>();
+builder.Services.AddSingleton<IMessageDataService, MessageDataService>();
 
 
 // Healthcheck
