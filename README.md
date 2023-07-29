@@ -65,7 +65,7 @@ The API uses the Log In information from the Web App to verify users (checking e
 Trying to access and endpoint (other than the token generator) without a valid token will return 401 Unauthorized.
 ![](https://lh3.googleusercontent.com/pw/AIL4fc9tXA0r0t6ozyAIgydI-KdXNpP5WX3eo69CW3v7ZljhCTucvm8bA4WmX58CXNm5noXU__avkVWz_76OiQi7XUKbbtKkzldtaWGW8fekGK-B4mH2MmC9G5iAJfjvakwnd_yLnGltLtnSEdddoDonoVCx=w1018-h421-s-no)
 
-Trying to access and endpoint without a valid token generated for a Mechanic to a Manager-Only endpoint will return 403 Forbidden.
+Trying to access and endpoint with a valid token generated for a Mechanic to a Manager-Only endpoint will return 403 Forbidden.
 ![](https://lh3.googleusercontent.com/pw/AIL4fc-P2ZVO9NjTdDJfSKeTK8eGNetoWKRKqzcRfE4nnlPP-9e4vBeNhhVnS8IeULjTN2Oq51cTmjcanSJWcLiaMBIqfI7KxI6xOM9uXHlhFnnM0h-on4r4ioQa6_NW6aNmq77xt4zuLiVX3K3PSy3iT1Of=w1062-h600-s-no)
 
 Creating a token using the login details through Asp.Net Identity User Manager will automatically retrieve the user role from the database to add this information to the token
