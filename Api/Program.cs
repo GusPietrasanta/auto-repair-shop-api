@@ -63,6 +63,7 @@ builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton<ICustomerDataService, CustomerDataService>();
 builder.Services.AddSingleton<IMessageDataService, MessageDataService>();
 builder.Services.AddSingleton<IReportDataService, ReportDataService>();
+builder.Services.AddSingleton<IAppointmentDataService, AppointmentDataService>();
 
 
 // Healthcheck
