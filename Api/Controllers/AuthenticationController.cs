@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using DataAccessLibrary.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
@@ -14,12 +15,15 @@ namespace Api.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IMechanicDataService _mechanicDataService;
 
         public AuthenticationController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            IMechanicDataService mechanicDataService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _mechanicDataService = mechanicDataService;
         }
         
         public record AuthenticationData(string Email, string Password);
@@ -41,12 +45,12 @@ namespace Api.Controllers
             // Get validated user role (Mechanic or Manager)
             string role = userInfo.Result.FirstOrDefault()!;
 
-            string token = GenerateToken(user, role);
+            string token = await GenerateToken(user, role);
 
             return Ok(token);
         }
 
-        private string GenerateToken(IdentityUser user, string role)
+        private async Task<string> GenerateToken(IdentityUser user, string role)
         {
             var secretKey =
                 new SymmetricSecurityKey(
@@ -58,8 +62,17 @@ namespace Api.Controllers
             {
                 new(JwtRegisteredClaimNames.Sub, user.Id),
                 new(JwtRegisteredClaimNames.UniqueName, user.UserName!),
-                new(ClaimTypes.Role, role)
+                new(ClaimTypes.Role, role),
+
             };
+            
+            if (role == "Mechanic")
+            {
+                var id = await GetMechanicId(user.UserName);
+                Claim mechanicId = new("MechanicId", id);
+                claims.Add(mechanicId);
+            }
+            
 
             var token = new JwtSecurityToken(
             Environment.GetEnvironmentVariable("Authentication:Issuer"),
@@ -70,6 +83,12 @@ namespace Api.Controllers
             signingCredentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private async Task<string> GetMechanicId(string? userName)
+        {
+            var id = await _mechanicDataService.GetMechanicIdByUserName(userName);
+            return id.ToString();
         }
 
         private async Task<IdentityUser?> ValidateCredentials(AuthenticationData data)
