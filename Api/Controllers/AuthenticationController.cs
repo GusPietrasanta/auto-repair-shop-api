@@ -16,14 +16,16 @@ namespace Api.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IMechanicDataService _mechanicDataService;
+        private readonly ILogger<AuthenticationController> _logger;
 
         public AuthenticationController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            IMechanicDataService mechanicDataService)
+            IMechanicDataService mechanicDataService, ILogger<AuthenticationController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mechanicDataService = mechanicDataService;
+            _logger = logger;
         }
         
         public record AuthenticationData(string Email, string Password);
@@ -32,6 +34,9 @@ namespace Api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<string>> Authentication([FromBody] AuthenticationData data)
         {
+            _logger.LogInformation("Username: {Username}", data.Email);
+            _logger.LogInformation("Password: {Password}", data.Password);
+            
             // Validate user
             IdentityUser? user = await ValidateCredentials(data);
 

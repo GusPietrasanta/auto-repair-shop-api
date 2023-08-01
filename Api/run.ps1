@@ -1,0 +1,1 @@
+dotnet run --urls "https://localhost:7150;http://localhost:5010;https://192.168.1.100:45455;http://192.168.1.100:45500"

@@ -65,6 +65,7 @@ builder.Services.AddSingleton<IMessageDataService, MessageDataService>();
 builder.Services.AddSingleton<IReportDataService, ReportDataService>();
 builder.Services.AddSingleton<IAppointmentDataService, AppointmentDataService>();
 builder.Services.AddSingleton<IMechanicDataService, MechanicDataService>();
+builder.Services.AddSingleton<IVehicleDataService, VehicleDataService>();
 
 
 // Healthcheck
@@ -115,7 +116,7 @@ if (app.Environment.IsDevelopment())
 	});
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
