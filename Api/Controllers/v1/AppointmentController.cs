@@ -1,8 +1,6 @@
 using System.Security.Claims;
-using DataAccessLibrary.Data.DataServices;
 using DataAccessLibrary.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1
@@ -60,7 +58,7 @@ namespace Api.Controllers.v1
         
 
         // GET: api/Appointment/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "Get Single Appointment")]
         public string Get(int id)
         {
             return "value";
@@ -72,23 +70,26 @@ namespace Api.Controllers.v1
         {
         }
 
-        // PUT: api/Appointment/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT: api/Appointment/Completed/5
+        [HttpPut("Completed/{id}", Name = "Set Appointment As Completed By Id")]
+        public async Task<ActionResult> Put(int id)
         {
+            try
+            {
+                await _appointmentDataService.SetAppointmentAsCompletedById(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "The GET call to api/Appointment/{Id}/Complete failed", id);
+                return BadRequest();
+            }
         }
 
         // DELETE: api/Appointment/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-        }
-
-        private string GetMechanicId()
-        {
-            string mechanicId = User.Claims.FirstOrDefault(c => c.Type == "MechanicId")!.Value;
-
-            return mechanicId;
         }
 
         private string GetMechanicUserName()
