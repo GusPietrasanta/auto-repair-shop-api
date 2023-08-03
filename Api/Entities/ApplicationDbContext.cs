@@ -5,8 +5,7 @@ namespace Api.Entities;
 
 public class ApplicationDbContext : IdentityDbContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
-        optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionStrings:SQLDB"));
     }
 }

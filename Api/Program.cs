@@ -5,6 +5,8 @@ using DataAccessLibrary.Data.Interfaces;
 using DataAccessLibrary.DataAccess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -72,7 +74,9 @@ builder.Services.AddSingleton<IVehicleDataService, VehicleDataService>();
 builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("SQLDB")!);
 
 // Identity
-builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("SQLDB")));
+
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddAuthorization(opts =>
