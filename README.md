@@ -62,17 +62,37 @@ Managers using WPF apps can search, view, and update customer and vehicle detail
 
 The API uses the Log In information from the Web App to verify users (checking email and password), creates a token with their roles and sends it back to the user to access the allowed endpoints.
 
-Invalid login details will return 401 Unauthorized
+Invalid login details will return 401 Unauthorized.
+
 ![](https://lh3.googleusercontent.com/pw/AIL4fc8iwMJdZVBsjsMbt5CJlGtHdyvn25vP-s9g4jOBkfPQtARuIsH0K_CljKCffLdh0N_PKBHOIgjxjBAEQYQFb_Bv7D86W8OAz2bXbTgJRvcvXcn88SelC79VdoDKoGRGKPy5YyXXOIUzk4Y04nZHxPbX=w1302-h801-s-no)
 
 Trying to access an endpoint (other than the token generator) without a valid token will return 401 Unauthorized.
+
 ![](https://lh3.googleusercontent.com/pw/AIL4fc9tXA0r0t6ozyAIgydI-KdXNpP5WX3eo69CW3v7ZljhCTucvm8bA4WmX58CXNm5noXU__avkVWz_76OiQi7XUKbbtKkzldtaWGW8fekGK-B4mH2MmC9G5iAJfjvakwnd_yLnGltLtnSEdddoDonoVCx=w1018-h421-s-no)
 
 Trying to access an endpoint with a valid token generated for a Mechanic to a Manager-Only endpoint will return 403 Forbidden.
+
 ![](https://lh3.googleusercontent.com/pw/AIL4fc-P2ZVO9NjTdDJfSKeTK8eGNetoWKRKqzcRfE4nnlPP-9e4vBeNhhVnS8IeULjTN2Oq51cTmjcanSJWcLiaMBIqfI7KxI6xOM9uXHlhFnnM0h-on4r4ioQa6_NW6aNmq77xt4zuLiVX3K3PSy3iT1Of=w1062-h600-s-no)
 
-Creating a token using the login details through Asp.Net Identity User Manager will automatically retrieve the user role from the database to add this information to the token
+Creating a token using the login details through Asp.Net Identity User Manager will automatically retrieve the user role from the database to add this information to the token.
+
 ![](https://lh3.googleusercontent.com/pw/AIL4fc9TBIb23GFJCkjQpVxyBI52fldHTLKFb3PQkjAgiohsPdXvgIOoh1y8ZTFJQHy1hFyGmYRsOJJkMaqAWVY3j1UAGjaWUtsFZ102syF1Hfl-I0Q4ETgtrhBy39HE_SoQddq_Dc_PBJYf_LQuBfO7sOTS=w772-h753-s-no)
 
-That generated token will now give the user access only to the allowed endpoints considering their role
+That generated token will now give the user access only to the allowed endpoints considering their role.
+
 ![](https://lh3.googleusercontent.com/pw/AIL4fc9lvhYm9t-8KekMwlzvjRruVxnbm5RJLz_rE40snrne_h6fBU0J1OKdj1BLzbflkyDO5-S8fXQNdj7cZ88TT6dT4NjtqHfpgwmrA5bxCYGLQ_ZvGZQRUs6eSiIZC5x7TOznsstdpwNevhRcnO13Nf0l=w1165-h882-s-no)
+
+
+## API Deployed to AWS
+
+### Authentication
+
+![](https://lh3.googleusercontent.com/pw/AIL4fc-JP0qrPAjQmp2CCyvofEpPE-bDvrLqPfrech-rIc39njL8bTdQqMBHSrx_ks--s41MLX8u1dS-VKsKnCvTpB7xcu6BVroynzUOX6SKA_7Ani7vqbmZeMfQgnJbwAIx1KViBDfPC3k9fYOWdbzGcFBh=w1104-h498-s-no)
+
+### Testing Get All Customers Endpoint
+
+![](https://lh3.googleusercontent.com/pw/AIL4fc8xbuZeO1tgTj7a87es1Ix01SDFq209u71wppxe_G-hx0Qm5UWf6A1c1y9g_sAkzeNBG2_Z6W4hOV9w0d4UIf3PFg614uP_JueUEXvu0B9Z5Ke2UnSq5oDialGkKO7NEDTtqUxvPtr1b0yJf1Nf2Cr3=w1234-h930-s-no)
+
+## Everything working together
+
+![](https://lh3.googleusercontent.com/pw/AIL4fc_qDTlL_SmHqop5KzHfSqK3M3PAYdVpI5qzwrj_GaEIEr6A2djIBjL7FzTFNiOFwbCrHbj3Kr08bEr5eE3vIWYWWZtduXhfW1ZSguOtur3rK5KOUiheIhx5DdvYexeiZjvfAag_NJgP9yWe74XI9YnQ=w1824-h912-s-no)
